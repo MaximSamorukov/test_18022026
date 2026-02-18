@@ -30,7 +30,7 @@ export const DivicesList: React.FC<DivicesListProps> = ({
         </thead>
         <tbody>
           {devices.map((i) => (
-            <tr onClick={onSelectDevice}>
+            <tr key={i.id} onClick={onSelectDevice}>
               <td>{i.id}</td>
               <td>{i.name}</td>
             </tr>

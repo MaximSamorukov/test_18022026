@@ -1,3 +1,5 @@
+import type { CurrencyInputOnChangeValues } from "react-currency-input-field";
+
 export type Place = {
   balances: number;
   currency: string;
@@ -21,3 +23,11 @@ export type Error = {
 export type BalanceUpdate = {
   delta: number;
 };
+
+export type HandlerCurrencyValueType =
+  | ((
+      value: string | undefined,
+      name?: string | undefined,
+      values?: CurrencyInputOnChangeValues | undefined,
+    ) => void)
+  | undefined;

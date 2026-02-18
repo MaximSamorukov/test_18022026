@@ -25,7 +25,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
     setShowModal(false);
     setSelectedPlaceId(null);
     setSelectedPlaceBalance(null);
-  }, []);
+  }, [setShowModal, setSelectedPlaceId, setSelectedPlaceBalance]);
 
   const handleSave = useCallback(
     async (diff: number) => {
@@ -34,7 +34,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
       }
       handleCloseModal();
     },
-    [device?.id, selectedPlaceId, handleCloseModal],
+    [device?.id, selectedPlaceId, handleCloseModal, updateBalance],
   );
   const handleSelectPlace = (e: React.MouseEvent<HTMLTableRowElement>) => {
     const [idNode, _, balanceNode] = e.currentTarget.childNodes;
@@ -48,7 +48,11 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
   };
   return (
     <div className="container">
-      <div className="title">Игроки на устройстве № {device?.id || ""}</div>
+      <div className="title">
+        Игроки.
+        <br />
+        Устройство № {device?.id || ""}
+      </div>
       <Button variant="primary" onClick={goBack}>
         Назад
       </Button>
@@ -62,7 +66,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
         </thead>
         <tbody>
           {places.map((i) => (
-            <tr onClick={handleSelectPlace}>
+            <tr key={i.place} onClick={handleSelectPlace}>
               <td>{i.place}</td>
               <td>{i.currency}</td>
               <td>{i.balances}</td>
