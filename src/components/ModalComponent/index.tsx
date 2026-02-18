@@ -102,6 +102,7 @@ export const ModalComponent: React.FC<ModalProps> = React.memo(
               className="form__amount"
               placeholder="Введите сумму"
               defaultValue={0}
+              // используем 2 знака после запятой, так как работаем с денежными значениями, имеющими сотые доли
               decimalsLimit={2}
               allowDecimals
               onValueChange={handleChangeAmount}

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { api } from "../api";
 import type { Device, Place } from "../types";
+import { ERRORS, SUCCESS } from "../constants";
 
 export const useDevices = () => {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -53,6 +55,10 @@ export const useDevices = () => {
                 places: updatedPlaces,
               };
             });
+            toast.success(SUCCESS.ON_UPDATE_BALANCE);
+          }
+          if (data === null) {
+            toast.error(ERRORS.UPDATE_BALANCE_ERROR);
           }
         })
         .finally(() => {

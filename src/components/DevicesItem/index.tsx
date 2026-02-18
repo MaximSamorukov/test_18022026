@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import Table from "react-bootstrap/Table";
 import type { Device, Place } from "../../types";
 import "./style.scss";
@@ -81,6 +82,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
         title="Редактирование баланса"
         show={showModal}
       />
+      <Toaster toastOptions={{ duration: 1500 }} />
     </div>
   );
 };
