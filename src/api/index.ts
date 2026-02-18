@@ -25,7 +25,7 @@ class Api {
 
       const data: T = await response.json();
       return data;
-    } catch (e) {
+    } catch {
       return {
         data: "Ошибка",
         err: "Ошибка",

@@ -38,7 +38,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
     [device?.id, selectedPlaceId, handleCloseModal, updateBalance],
   );
   const handleSelectPlace = (e: React.MouseEvent<HTMLTableRowElement>) => {
-    const [idNode, _, balanceNode] = e.currentTarget.childNodes;
+    const [idNode, , balanceNode] = e.currentTarget.childNodes;
     const placeId = idNode.textContent;
     const balance = balanceNode.textContent;
     if (placeId) {

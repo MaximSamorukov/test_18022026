@@ -7,7 +7,8 @@ import { ERRORS, SUCCESS } from "../constants";
 export const useDevices = () => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [device, setDevice] = useState<Device | null>(null);
-  const [place, setPlace] = useState<Place | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_place, setPlace] = useState<Place | null>(null);
   const [balanceUpdateInProgress, setBalanceUpdateInProgress] =
     useState<boolean>(false);
 
@@ -65,7 +66,7 @@ export const useDevices = () => {
           setBalanceUpdateInProgress(false);
         });
     },
-    [place],
+    [],
   );
   return {
     device,
