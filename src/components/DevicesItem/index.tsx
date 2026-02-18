@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Table from "react-bootstrap/Table";
-import type { Device } from "../../types";
+import type { Device, Place } from "../../types";
 import "./style.scss";
+import { ModalComponent } from "../ModalComponent";
+import { useDevices } from "../../hooks/useDevices";
+import { Button } from "react-bootstrap";
 
 type DiviceItemProps = {
   device: Device | null;
@@ -9,13 +12,46 @@ type DiviceItemProps = {
 };
 
 export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
+  const { updateBalance } = useDevices();
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
+  const [selectedPlaceBalance, setSelectedPlaceBalance] = useState<
+    number | null
+  >(null);
+  const [showModal, setShowModal] = useState(false);
+
   const places = device?.places || [];
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+    setSelectedPlaceId(null);
+    setSelectedPlaceBalance(null);
+  }, []);
+
+  const handleSave = useCallback(
+    async (diff: number) => {
+      if (device?.id && selectedPlaceId) {
+        await updateBalance(diff, device?.id, Number(selectedPlaceId));
+      }
+      handleCloseModal();
+    },
+    [device?.id, selectedPlaceId, handleCloseModal],
+  );
+  const handleSelectPlace = (e: React.MouseEvent<HTMLTableRowElement>) => {
+    const [idNode, _, balanceNode] = e.currentTarget.childNodes;
+    const placeId = idNode.textContent;
+    const balance = balanceNode.textContent;
+    if (placeId) {
+      setSelectedPlaceId(placeId);
+      setSelectedPlaceBalance(Number(balance));
+      setShowModal(true);
+    }
+  };
   return (
     <div className="container">
       <div className="title">Игроки на устройстве № {device?.id || ""}</div>
-      <button onClick={goBack} className="back_button">
+      <Button variant="primary" onClick={goBack}>
         Назад
-      </button>
+      </Button>
       <Table bordered responsive="sm" hover>
         <thead>
           <tr>
@@ -26,7 +62,7 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
         </thead>
         <tbody>
           {places.map((i) => (
-            <tr>
+            <tr onClick={handleSelectPlace}>
               <td>{i.place}</td>
               <td>{i.currency}</td>
               <td>{i.balances}</td>
@@ -34,6 +70,13 @@ export const DivicesItem: React.FC<DiviceItemProps> = ({ device, goBack }) => {
           ))}
         </tbody>
       </Table>
+      <ModalComponent
+        balance={selectedPlaceBalance}
+        onSave={handleSave}
+        onCancel={handleCloseModal}
+        title="Редактирование баланса"
+        show={showModal}
+      />
     </div>
   );
 };
