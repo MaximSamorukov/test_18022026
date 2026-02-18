@@ -12,7 +12,7 @@ class Api {
     options?: RequestInit,
   ): Promise<T | Error> {
     try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      const response = await fetch(`${this.baseUrl}${endpoint}/`, {
         headers: { "Content-Type": "application/json" },
         ...options,
       });
