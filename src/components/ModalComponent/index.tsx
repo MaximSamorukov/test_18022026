@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
-import CurrencyInput from "react-currency-input-field";
+import CurrencyInput, {
+  type CurrencyInputOnChangeValues,
+} from "react-currency-input-field";
 import cn from "classnames";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
@@ -47,7 +49,7 @@ export const ModalComponent: React.FC<ModalProps> = React.memo(
     );
 
     const handleChangeAmount: HandlerCurrencyValueType = useCallback(
-      (_, __, data) => {
+      (_?: string, __?: string, data?: CurrencyInputOnChangeValues) => {
         setAmount(data?.float || 0);
         handleProcessInput(data?.float || 0, operation);
       },

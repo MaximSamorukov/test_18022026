@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import Table from "react-bootstrap/Table";
-import type { Device, Place } from "../../types";
+import type { Device } from "../../types";
 import "./style.scss";
 import { ModalComponent } from "../ModalComponent";
 import { useDevices } from "../../hooks/useDevices";
